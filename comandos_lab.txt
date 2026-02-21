@@ -1,0 +1,42 @@
+==========================================================
+LABORATÓRIO CISCO: CONFIGURAÇÃO E TESTE DE TELNET E SSH
+==========================================================
+
+1. VERIFICAÇÃO DE ENDEREÇAMENTO E CONECTIVIDADE (PC)
+--------------------------------------------------
+> ipconfig
+(Verifica se o PC recebeu o IP via DHCP na rede 64.100.1.0/24)
+
+> ping 64.100.1.1
+(Testa a conectividade ICMP com o Gateway/Roteador HQ)
+
+2. TENTATIVA DE ACESSO VIA TELNET (INSEGURO)
+-------------------------------------------
+> telnet 64.100.1.1
+Resultado esperado: "Connection closed by foreign host"
+Nota: O acesso é recusado pois o Telnet envia dados em texto claro.
+
+3. ACESSO REMOTO VIA SSH (SEGURO)
+--------------------------------
+> ssh -l admin 64.100.1.1
+Parâmetros: -l (define o login do utilizador)
+Utilizador: admin
+Password:  class
+
+4. COMANDOS DE VERIFICAÇÃO DENTRO DO ROTEADOR (CLI)
+--------------------------------------------------
+HQ> enable
+(Entra no modo privilegiado)
+
+HQ# show ip ssh
+(Verifica a versão do SSH e as configurações de autenticação)
+
+HQ# show line vty 0 4
+(Verifica quais os protocolos permitidos nas linhas de acesso remoto)
+
+==========================================================
+NOTAS DE CIBERSEGURANÇA:
+- O SSH (porta 22) utiliza criptografia para proteger a sessão.
+- O Telnet (porta 23) deve ser desativado (Hardening) para evitar 
+  ataques de Sniffing e Man-in-the-Middle.
+==========================================================
